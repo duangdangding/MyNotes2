@@ -1,0 +1,53 @@
+在SSH整合项目中出现了如下错误信息：
+
+org.hibernate.LazyInitializationException:could not initialize proxy - no Session
+
+org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:149)
+
+org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:195)
+
+org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer.invoke(JavassistLazyInitializer.java:185)
+
+ 
+
+could not initialize proxy - no Session——翻译为无法初始化没有会话的代理对象
+
+出现该错误的原因是Hibernate使用sessionFactory来管理session，我们每进行一次数据库操作时都会新建一个session对象，当我们操作完成后，hibernate就会在dao层立即关闭该session。所以当我们操作类中另一个类的具体属性时，因为session已经关闭，就会报错。
+
+         这是Hibernate的懒加载策略，因为每一次查询我们并不会使用到查询对象关联的所有对象，所有Hibernate在查询数据库时并不会把类关联的对象统一查出来。
+
+ 
+
+既然知道了错误的原因，就很好解决了。
+
+第一种办法：
+
+最直接的办法就是把Hibernate的懒加载机制关闭，方法：
+
+
+
+在映射文件中多对一映射处写 : azy="false"
+
+
+
+但是这种办法不推荐，取消懒加载之后每次查询用不用得到的对象都要加载出来，很影响效率。
+
+第二种办法：
+
+不要Hibernate去管理session，而是将session交给servlet filter来管理，每当接收一个请求后就会开启一个session，只有当响应结束后才会关闭。
+
+ 
+
+具体做法：
+
+在web.xml中配置：
+
+[html] view plain copy
+<span style="font-size:18px;">  <filter-name>hibernateFilter</filter-name>     
+         <filter-class>  org.springframework.orm.hibernate4.support.OpenSessionInViewFilter </filter-class>     
+    </filter     
+    <filter-mapping>     
+         <filter-name>hibernateFilter</filter-name>     
+         <url-pattern>/*</url-pattern>     
+    </filter-mapping>  
+</span>  

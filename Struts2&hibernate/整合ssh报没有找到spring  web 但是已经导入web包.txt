@@ -1,0 +1,22 @@
+这个时候要在web.xml里面配置
+spring监听器
+!-- 指定多个配置文件 -->
+ <context-param>
+ 	<!-- 参数名为contextConfigLocation -->
+ 	<param-name>contextConfigLocation</param-name>
+ 	<param-value>/WEB-INF/classes/applicationContext.xml</param-value>
+ </context-param>
+ <!-- 使用ContextLoaderListener 初始化spring容器 -->
+  <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+  
+   <filter>
+    <filter-name>openSessionInVieFilter</filter-name>
+    <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>openSessionInVieFilter</filter-name>
+    <url-pattern>/web/*</url-pattern>
+  </filter-mapping>
+还有Spring session

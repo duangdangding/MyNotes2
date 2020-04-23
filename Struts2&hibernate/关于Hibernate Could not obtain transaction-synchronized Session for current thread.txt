@@ -1,0 +1,28 @@
+只要在
+
+applicationContext.xml　中追加
+
+1 <!-- 配置事务管理器 -->   
+2    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">   
+3        <property name="sessionFactory" ref="sessionFactory"></property>   
+4    </bean>  
+5       
+6    <tx:annotation-driven transaction-manager="transactionManager"/>  
+然后再在实现类加上@Transactional
+
+复制代码
+ 1 @Repository  
+ 2 @Transactional  
+ 3 public class UserDaoImpl implements IUserDao {  
+ 4   
+ 5     @Autowired  
+ 6     private SessionFactory sessionFactory;  
+ 7   
+ 8     private Session getSession(){  
+ 9         return sessionFactory.getCurrentSession();  
+10           
+11     }  
+12     ...   
+13 }  
+复制代码
+这样问题就完美解决了。

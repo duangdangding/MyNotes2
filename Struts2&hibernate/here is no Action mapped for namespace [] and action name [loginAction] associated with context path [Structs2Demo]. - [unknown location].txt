@@ -1,0 +1,8 @@
+这是使用struts2.3以后的版本报的错误
+我现在用的是2.5的
+然后
+设置
+<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+在package里面action外面的上方设置全局的<global-allowed-methods>里面是方法名  也可以是*</>
+
+2、在action里面设置<allowed-methods></>

@@ -1,0 +1,10 @@
+第一步导入org.easymocy的包
+<!-- https://mvnrepository.com/artifact/org.easymock/easymock -->
+		<!--模拟httpservlet-->
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.1</version>
+			<!--<scope>test</scope>-->
+		</dependency>
+HttpServletResponse response = EasyMock.createMock(HttpServletResponse.class);

@@ -1,0 +1,19 @@
+Unable to find 'struts.multipart.saveDir' property setting.
+
+今天在做工作的时候遇到了这个问题，后来经过百度，终于知道了原因，现在记录下来，以备以后查看。
+
+1.struts.multipart.saveDir没有配置
+
+
+
+2.struts.multipart.saveDir用于存放指定临时文件的文件夹，该配置在struts.properties文件中。例如：在struts.properties文件中加入如下代码：
+
+struts.multipart.saveDir = /tmp
+
+这样下次提交表单的时候就不会出现这个问题了！
+
+
+
+3.如果没有用struts.properties文件，也可以在struts.xml中配置如下代码，效果一样：
+
+<constant name="struts.multipart.saveDir" value="/tmp"/>

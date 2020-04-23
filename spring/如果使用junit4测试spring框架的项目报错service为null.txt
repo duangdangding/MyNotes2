@@ -1,0 +1,3 @@
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath*:conf/applicationContext.xml"})
+测试类上面使用注解

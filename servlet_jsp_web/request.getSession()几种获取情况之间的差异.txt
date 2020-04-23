@@ -1,0 +1,21 @@
+一、三种情况如下
+
+HttpSession session = request.getSession();
+
+HttpSession session = request.getSession(true);
+
+HttpSession session = request.getSession(false);
+
+
+二、三种情况之间的差异
+
+getSession(boolean create)意思是返回当前reqeust中的HttpSession ，如果当前reqeust中的HttpSession 为null，当create为true，就创建一个新的Session，否则返回null； 
+简而言之： 
+HttpServletRequest.getSession(ture)等同于 HttpServletRequest.getSession() 
+HttpServletRequest.getSession(false)等同于 如果当前Session没有就为null； 
+
+
+三、具体的使用场景
+当向Session中存取登录信息时，一般建议：HttpSession session =request.getSession();
+
+当从Session中获取登录信息时，一般建议：HttpSession session =request.getSession(false);
